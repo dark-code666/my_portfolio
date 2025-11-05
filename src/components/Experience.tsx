@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { Box, Typography, Card, CardContent } from "@mui/material";
 
 const experiences = [
@@ -27,6 +28,7 @@ const experiences = [
     details: [
       "Desarrollo e implementación de sistemas contables empresariales.",
       "Pruebas unitarias y resolución de incidencias técnicas.",
+      "Remotar desarrollo de sistema POS con .NET y DevExpress.",
       "Uso de Azure DevOps para sprints, control de cambios y versiones.",
       "Integración de módulos críticos con DevExpress y LINQ.",
     ],
@@ -34,11 +36,41 @@ const experiences = [
 ];
 
 export default function Experience() {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <Box sx={{ py: 8 }}>
+    <Box
+      ref={ref}
+      sx={{
+        py: 8,
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(40px)",
+        transition: "opacity 1s ease-out, transform 1s ease-out",
+      }}
+    >
       <Typography variant="h4" gutterBottom>
         Experiencia Laboral
       </Typography>
+
       {experiences.map((exp) => (
         <Card key={exp.title} sx={{ mb: 3, backgroundColor: "background.paper" }}>
           <CardContent>

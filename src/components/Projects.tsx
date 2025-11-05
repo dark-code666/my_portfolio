@@ -1,10 +1,19 @@
+import { useEffect, useRef, useState } from "react";
 import { Box, Typography, Card, CardContent, CardActions, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-const projects = [
+interface Project {
+  title: string;
+  description: string;
+  route?: string; // ruta interna
+  link?: string;  // enlace externo
+}
+
+const projects: Project[] = [
   {
     title: "Sistema Web de Préstamos",
     description: "Aplicación completa con ASP.NET Core y React (TypeScript, Vite).",
-    link: "https://github.com/tuusuario/loan-system",
+    route: "/credipath", // SPA interna
   },
   {
     title: "Sistema de Inventario Funeraria",
@@ -19,11 +28,42 @@ const projects = [
 ];
 
 export default function Projects() {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [visible, setVisible] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <Box sx={{ py: 8 }}>
+    <Box
+      ref={ref}
+      sx={{
+        py: 8,
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(40px)",
+        transition: "opacity 1s ease-out, transform 1s ease-out",
+      }}
+    >
       <Typography variant="h4" gutterBottom>
         Proyectos
       </Typography>
+
       {projects.map((p) => (
         <Card key={p.title} sx={{ mb: 3, backgroundColor: "background.paper" }}>
           <CardContent>
@@ -31,9 +71,30 @@ export default function Projects() {
             <Typography color="text.secondary">{p.description}</Typography>
           </CardContent>
           <CardActions>
-            <Button size="small" href={p.link} target="_blank">
-              Ver más
-            </Button>
+            {p.route ? (
+              <Button
+                size="small"
+                onClick={() => {
+                  if (p.route) {
+                    navigate(p.route);
+                  }
+                }}
+              >
+                Ver más
+              </Button>
+            ) : (
+              p.link && (
+                <Button
+                  size="small"
+                  component="a"
+                  href={p.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Ver más
+                </Button>
+              )
+            )}
           </CardActions>
         </Card>
       ))}

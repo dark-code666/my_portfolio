@@ -1,20 +1,49 @@
+import { useEffect, useRef, useState } from "react";
 import { Box, Typography, Button, Stack } from "@mui/material";
 import { GitHub, LinkedIn, Email } from "@mui/icons-material";
 
 export default function Hero() {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.unobserve(el); // deja de observar una vez que ya se mostró
+        }
+      },
+      { threshold: 0.2 } // se activa cuando el 20% del componente es visible
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <Box
+      ref={ref}
       component="section"
       id="hero"
       textAlign="center"
-      sx={{ py: 10, backgroundColor: "background.default" }}
+      sx={{
+        py: 10,
+        backgroundColor: "background.default",
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(50px)",
+        transition: "opacity 1s ease-out, transform 1s ease-out",
+      }}
     >
       <Typography variant="h3" fontWeight="bold" gutterBottom>
         Ricardo Antonio Morales Sánchez
       </Typography>
 
       <Typography variant="h5" color="text.secondary" gutterBottom>
-        Desarrollador de Software | .NET | React | TypeScript
+        Desarrollador de Software | .NET | React | TypeScript | Node.js | SQL | MySQL | Flutter
       </Typography>
 
       <Stack
