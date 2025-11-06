@@ -1,12 +1,16 @@
-
+import img1 from "../image_credipath/Screenshot 2025-11-05 104552.png";
+import img2 from "../image_credipath/Screenshot 2025-11-05 104604.png";
+import img3 from "../image_credipath/Screenshot 2025-11-05 104617.png";
 
 import CrediPathDetail from "../Projects/CredipathDetail";
 
 export default function CrediPathPage() {
+  const images = [img1, img2, img3];
+
   return (
     <CrediPathDetail
       title="CrediPath - Sistema de Préstamos"
-    description={`Credipath es una innovadora plataforma diseñada para la administración eficiente de préstamos de clientes a través de rutas específicas. Desarrollado con tecnologías avanzadas como ASP.NET, SQL Server y React, este sistema integra herramientas de gestión que permiten a las instituciones financieras optimizar el seguimiento y control de los préstamos, garantizando un acceso rápido y seguro a la información relevante.
+      description={`Credipath es una innovadora plataforma diseñada para la administración eficiente de préstamos de clientes a través de rutas específicas. Desarrollado con tecnologías avanzadas como ASP.NET, SQL Server y React, este sistema integra herramientas de gestión que permiten a las instituciones financieras optimizar el seguimiento y control de los préstamos, garantizando un acceso rápido y seguro a la información relevante.
 
 Características Principales:
 
@@ -27,11 +31,7 @@ Beneficios:
 - Análisis de datos en tiempo real que permite ajustar estrategias y procesos.
 
 Credipath se posiciona como una solución integral para las instituciones que buscan modernizar su gestión de préstamos, ofreciendo herramientas que promueven un manejo más eficiente y seguro de los recursos financieros.`}
-      images={[
-  "/Images/image_credipath/Screenshot 2025-11-05 104552.png",
-  "/Images/image_credipath/Screenshot 2025-11-05 104604.png",
-  "/Images/image_credipath/Screenshot 2025-11-05 104617.png",
-]}
+      images={images}
     />
   );
 }

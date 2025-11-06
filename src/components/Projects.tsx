@@ -13,7 +13,7 @@ const projects: Project[] = [
   {
     title: "Sistema Web de Préstamos",
     description: "Aplicación completa con ASP.NET Core y React (TypeScript, Vite).",
-    route: "/credipath", // SPA interna
+    route: "/credipath", 
   },
   {
     title: "Sistema de Inventario Funeraria",
@@ -21,10 +21,15 @@ const projects: Project[] = [
     link: "https://github.com/tuusuario/funeral-inventory",
   },
   {
-    title: "Módulo de Logística",
-    description: "Backend de aplicación móvil para rastreo y control de entregas.",
-    link: "#",
+    title: "Sistema POS",
+    description: "Aplicacion POS hecha con C#, linq y devexpress.",
+    route: "#",
   },
+  {
+    title: "Sistema ERP",
+    description: "Sistema contable empresarial desarrollado en C# linq y devexpress.",
+    route: "#",
+  }
 ];
 
 export default function Projects() {
